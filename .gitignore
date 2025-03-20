@@ -1,0 +1,34 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+# Datasource local storage ignored files
+/dataSources/
+/dataSources.local.xml
+# PyCharm project files
+.idea/
+*.iml
+# Database files
+*.sqlite3
+*.db
+
+# Log files
+logs/
+*.log
+
+# Byte-compiled and cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment (if inside project folder)
+venv/
+env/
+.virtualenv/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+*.egg
