@@ -15,23 +15,21 @@ import {
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import axios from 'axios';
-
-interface Movie {
-  id: number;
-  title: string;
-  year: number;
-  rating: number;
-  director: string;
-  genre: string[];
-  posterUrl: string;
-  description: string;
-}
+import Movie from '../interfaces/MovieInterface'
+import MovieCard from "../components/MovieCard.tsx";
+import { useNavigate } from 'react-router-dom';
 
 const TopMovies = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [error, setError] = useState<string | null>(null);
+
+  const navigate = useNavigate();
+
+  const handleMovieClick = (id: number) => {
+    navigate(`/movie/${id}`);
+  };
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -102,60 +100,18 @@ const TopMovies = () => {
 
       <Grid container spacing={4}>
         {filteredMovies.map((movie) => (
-          <Grid item xs={12} sm={6} md={4} key={movie.id}>
-            <Card
-              sx={{
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                transition: 'transform 0.2s',
-                '&:hover': {
-                  transform: 'scale(1.02)',
-                },
-              }}
-            >
-              <CardMedia
-                component="img"
-                height="300"
-                image={movie.posterUrl}
-                alt={movie.title}
-              />
-              <CardContent sx={{ flexGrow: 1 }}>
-                <Typography gutterBottom variant="h6" component="h2">
-                  {movie.title}
-                </Typography>
-                <Typography variant="subtitle1" color="text.secondary" gutterBottom>
-                  Released: {movie.year} | Rating: {movie.rating.toFixed(1)}
-                </Typography>
-                <Typography variant="body2" color="text.secondary" gutterBottom>
-                  Director: {movie.director}
-                </Typography>
-                <Box sx={{ mb: 1 }}>
-                  {movie.genre.map((g) => (
-                    <Chip
-                      key={g}
-                      label={g}
-                      size="small"
-                      sx={{ mr: 0.5, mb: 0.5 }}
-                    />
-                  ))}
+            <Grid item xs={12} sm={6} md={4} key={movie.id}>
+                <Box
+                    onClick={() => navigate(`/movie/${movie.id}`)}
+                    style={{cursor: 'pointer'}}
+                >
+                  <MovieCard movie={movie} small/>
                 </Box>
-                <Rating 
-                  value={movie.rating / 2} 
-                  precision={0.1} 
-                  readOnly 
-                  sx={{ mb: 1 }}
-                />
-                <Typography variant="body2" color="text.secondary">
-                  {movie.description}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
+            </Grid>
+          ))}
       </Grid>
     </Container>
-  );
+);
 };
 
 export default TopMovies; 
