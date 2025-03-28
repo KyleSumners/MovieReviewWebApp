@@ -1,4 +1,4 @@
-# Build stage
+# Select a base image
 FROM python:3.11-slim as builder
 
 WORKDIR /app
@@ -53,5 +53,5 @@ ENV PYTHONDONTWRITEBYTECODE=1
 # Expose port
 EXPOSE 8000
 
-# Run the application
+# Define command to run the application
 CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
