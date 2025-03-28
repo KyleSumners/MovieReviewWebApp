@@ -9,7 +9,7 @@
 4. It will need a UI to allow users to rate and display movies. It will also need a database in order to hold all these movies, as well as a backend API to keep up to date with movies that are newly released.
 
 **Project Description**
-This is a full-stack web application that allows users to explore a wide selection of popular movies! Users can find movies through a search system or by browsing top-rated films based on critical reviews. Users are also able to search for movies filmed by a certain director. Once a user has found a movie that interests them they are able to open up its movie page which features the film poster, director and any additional details about the movie.
+This is a full-stack web application that allows users to explore a wide selection of popular movies! Users can find movies through a search system or by browsing top-rated films based on critical reviews. Users are also able to search for movies filmed by a certain director. Once a user has found a movie that interests them they are able to open up its movie page which features the film poster, director and any additional details about the movie. Currently there are no user accounts or authentication, and ratings are purely based off of the IMDb ratings that are scraped for data.
 
 **Project Run Instructions**
 Start the service via Docker Compose and build containers: 
