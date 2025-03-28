@@ -1,15 +1,14 @@
-# Build stage
+# Select a base image
 FROM node:18-alpine AS builder
 
+# Set the working directory of the container
 WORKDIR /app
 
-# Copy package files
+# Copy package files and install dependencies
 COPY package*.json ./
-
-# Install dependencies
 RUN npm install
 
-# Copy source code
+# Copy application files
 COPY . .
 
 # Build the app
@@ -27,5 +26,5 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 # Expose port 80
 EXPOSE 80
 
-# Start nginx
+# Define command to run the application
 CMD ["nginx", "-g", "daemon off;"]
