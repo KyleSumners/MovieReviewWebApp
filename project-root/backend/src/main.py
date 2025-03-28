@@ -9,7 +9,7 @@ import asyncio
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
 from src.database import get_db, init_db
-from src.models import Movie
+from src.models import Movie, Review, ReviewDTO
 import time
 
 app = FastAPI()
@@ -345,6 +345,24 @@ async def get_movie_by_id(movie_id: str, db: Session = Depends(get_db)):
         return movie.to_dict()
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error retrieving movie details: {str(e)}")
+
+@app.get("/api/movies/{movie_id}/reviews")
+def get_reviews(movie_id: str, db: Session = Depends(get_db)):
+    reviews = db.query(Review).filter(Review.movie_id == movie_id).all()
+    return [review.to_dict() for review in reviews]
+
+
+@app.post("/api/movies/{movie_id}/review")
+def add_review(movie_id: str, review: ReviewDTO, db: Session = Depends(get_db)):
+    movie = db.query(Movie).filter(Movie.id == movie_id).first()
+    if not movie:
+        raise HTTPException(status_code=404, detail="Movie not found")
+
+    review = Review(movie_id=movie_id, rating=review.rating, review_msg=review.review_msg)
+    db.add(review)
+    db.commit()
+    db.refresh(review)
+    return {"message": "Review added successfully", "review": review}
 
 
 @app.get("/api/movies/demo")
